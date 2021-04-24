@@ -11,7 +11,7 @@ func main() {
 	PortHandler := handler.NewPortHandler(respository.PortRepository{})
 	v1 := router.Group("/v1")
 	{
-		v1.POST("/port", PortHandler.GetLastStatus)
+		v1.GET("/port", PortHandler.GetLastStatus)
 	}
 	router.Run(":8000")
 }
