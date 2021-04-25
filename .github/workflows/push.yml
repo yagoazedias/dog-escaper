@@ -9,7 +9,8 @@ jobs:
     - name: go1.16 test
       uses: yagoazedias/golang-pipeline/go1.16/test@master
       env:
-        GOOS: amd64
+        GOOS: "linux"
+        GOARCH: "amd64"
     - name: go1.16 release
       uses: yagoazedias/golang-pipeline/go1.16/release@master
       env:
