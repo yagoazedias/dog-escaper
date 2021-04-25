@@ -34,8 +34,23 @@ jobs:
         run: go build -o dist/dog_escaper_${{ matrix.os }}
       - uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.os }}
+          name: dog_escaper_${{ matrix.os }}
           path: dist/dog_escaper_${{ matrix.os }}
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Downloading Artifact
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: dog_escaper_ubuntu-latest  windows-latest
+      - uses: actions/download-artifact@v2
+        with:
+          name: dog_escaper_macos-latest
+      - uses: actions/download-artifact@v2
+        with:
+          name: dog_escaper_windows-latest
 
       - name: Create GitHub release
         id: create_new_release
@@ -46,12 +61,32 @@ jobs:
           tag_name: 1.0.${{ github.run_number }}
           release_name: 1.0.${{ github.run_number }}
 
-      - name: Upload installer to GitHub release
+      - name: Upload Linux Executable to GitHub release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_new_release.outputs.upload_url }}
-          asset_path: ./dist/dog_escaper_${{ matrix.os }}
-          asset_name: dog_escaper_${{ matrix.os }}
+          asset_path: ./dist/dog_escaper_ubuntu-latest
+          asset_name: dog_escaper_ubuntu-latest
+          asset_content_type: application/octet-stream
+
+      - name: Upload Windows Executable to GitHub release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_new_release.outputs.upload_url }}
+          asset_path: ./dist/dog_escaper_windows-latest
+          asset_name: dog_escaper_windows-latest
+          asset_content_type: application/octet-stream
+
+      - name: Upload Macos Executable to GitHub release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_new_release.outputs.upload_url }}
+          asset_path: ./dist/dog_escaper_macos-latest
+          asset_name: dog_escaper_macos-latest
           asset_content_type: application/octet-stream
