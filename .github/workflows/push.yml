@@ -6,8 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: go1.16  linters
-      uses: yagoazedias/golang-pipeline/go1.16/linter@master
     - name: go1.16 test
       uses: yagoazedias/golang-pipeline/go1.16/test@master
     - name: go1.16 release
