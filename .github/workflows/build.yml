@@ -1,7 +1,10 @@
 on: push
 
-steps:
-  - name: go1.16 release
-    uses: shoukoo/golang-pipeline/go1.16/release@master
-    env:
-      PROJECT_PATH: "."
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: go1.16 release
+        uses: shoukoo/golang-pipeline/go1.16/release@master
+        env:
+          PROJECT_PATH: "."
