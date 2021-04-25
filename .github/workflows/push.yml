@@ -11,8 +11,10 @@ jobs:
       env:
         GOOS: "linux"
         GOARCH: "amd64"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: go1.16 release
       uses: yagoazedias/golang-pipeline/go1.16/release@master
       env:
         GOOS: "linux"
         GOARCH: "amd64"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
