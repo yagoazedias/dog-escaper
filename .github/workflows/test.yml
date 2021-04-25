@@ -78,7 +78,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_new_release.outputs.upload_url }}
-          asset_path: ./dist/dog_escaper_ubuntu-latest
+          asset_path: /home/runner/work/dog-escaper/dog-escaper/dist/ubuntu-latest
           asset_name: dog_escaper_ubuntu-latest
           asset_content_type: application/octet-stream
 
@@ -88,7 +88,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_new_release.outputs.upload_url }}
-          asset_path: ./dist/dog_escaper_windows-latest
+          asset_path: /home/runner/work/dog-escaper/dog-escaper/dist/windows-latest
           asset_name: dog_escaper_windows-latest
           asset_content_type: application/octet-stream
 
@@ -98,6 +98,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_new_release.outputs.upload_url }}
-          asset_path: ./dist/dog_escaper_macos-latest
+          asset_path: /home/runner/work/dog-escaper/dog-escaper/dist/macos-latest
           asset_name: dog_escaper_macos-latest
           asset_content_type: application/octet-stream
