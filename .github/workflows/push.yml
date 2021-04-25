@@ -8,5 +8,9 @@ jobs:
     - uses: actions/checkout@master
     - name: go1.16 test
       uses: yagoazedias/golang-pipeline/go1.16/test@master
+      env:
+        GOOS: amd64
     - name: go1.16 release
       uses: yagoazedias/golang-pipeline/go1.16/release@master
+      env:
+        GOOS: amd64
