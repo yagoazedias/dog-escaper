@@ -1,7 +1,7 @@
 on: push
 
 steps:
-  - name: go1.12 test
-    uses: shoukoo/golang-pipeline/go1.12/test@master
+  - name: go1.16 release
+    uses: shoukoo/golang-pipeline/go1.16/release@master
     env:
       PROJECT_PATH: "."
