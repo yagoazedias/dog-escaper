@@ -1,0 +1,7 @@
+on: push
+
+steps:
+  - name: go1.12 test
+    uses: shoukoo/golang-pipeline/go1.12/test@master
+    env:
+      PROJECT_PATH: "."
