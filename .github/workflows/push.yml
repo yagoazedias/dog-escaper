@@ -13,4 +13,4 @@ jobs:
     - name: go1.16 release
       uses: yagoazedias/golang-pipeline/go1.16/release@master
       env:
-        GOOS: amd64
+        GOOS: linux
