@@ -55,7 +55,7 @@ func TestHandlerGetAll(t *testing.T) {
 		t.Fail()
 	}
 
-	expected := `{"status":"test"}`
+	expected := `{"status":"tesst"}`
 
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
