@@ -40,14 +40,20 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Downloading Artifact
+      - name: Checkout
       - uses: actions/checkout@v2
+
+      - name: Downloading Artifact Ubuntu
       - uses: actions/download-artifact@v2
         with:
-          name: dog_escaper_ubuntu-latest  windows-latest
+          name: dog_escaper_ubuntu-latest
+
+      - name: Downloading Artifact Macos
       - uses: actions/download-artifact@v2
         with:
           name: dog_escaper_macos-latest
+
+      - name: Downloading Artifact Windows
       - uses: actions/download-artifact@v2
         with:
           name: dog_escaper_windows-latest
