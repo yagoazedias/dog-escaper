@@ -4,14 +4,13 @@ jobs:
   test:
     strategy:
       matrix:
-        go-version: [1.15.x, 1.16.x]
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Install Go
         uses: actions/setup-go@v2
         with:
-          go-version: ${{ matrix.go-version }}
+          go-version: 1.16.x
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Test
@@ -20,25 +19,23 @@ jobs:
     needs: test
     strategy:
       matrix:
-        go-version: [ 1.15.x, 1.16.x ]
         os: [ ubuntu-latest, macos-latest, windows-latest ]
-        os-extension: [ run, mac, exe ]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Install Go
         uses: actions/setup-go@v2
         with:
-          go-version: ${{ matrix.go-version }}
+          go-version: 1.16.x
 
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Build
-        run: go build -o dist/dog_escaper.${{ matrix.os-extension }}
+        run: go build -o dist/dog_escaper
       - uses: actions/upload-artifact@v2
         with:
-          name: windows
-          path: dist/dog_escaper.exe
+          name: ${{ matrix.os }}
+          path: dist/dog_escaper_${{ matrix.os }}
 
       - name: Create GitHub release
         id: create_new_release
@@ -49,12 +46,12 @@ jobs:
           tag_name: 1.0.${{ github.run_number }}
           release_name: 1.0.${{ github.run_number }}
 
-      - name: Upload Linux installer to GitHub release
+      - name: Upload installer to GitHub release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_new_release.outputs.upload_url }}
-          asset_path: ./dist/dog_escaper.run
-          asset_name: linux-chess.run
+          asset_path: ./dist/dog_escaper_${{ matrix.os }}
+          asset_name: dog_escaper_${{ matrix.os }}
           asset_content_type: application/octet-stream
