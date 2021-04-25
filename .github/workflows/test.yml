@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Test
         run: go test ./...
+
   build:
     needs: test
     strategy:
@@ -41,20 +42,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
 
       - name: Downloading Artifact Ubuntu
-      - uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: dog_escaper_ubuntu-latest
 
       - name: Downloading Artifact Macos
-      - uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: dog_escaper_macos-latest
 
       - name: Downloading Artifact Windows
-      - uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: dog_escaper_windows-latest
 
