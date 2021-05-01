@@ -2,6 +2,7 @@ package respository
 
 import (
 	"errors"
+	"fmt"
 	_ "github.com/lib/pq" // here
 	"github.com/yagoazedias/dog-escaper/infraestruture"
 	"github.com/yagoazedias/dog-escaper/model"
@@ -29,6 +30,7 @@ func (r PortRepository) GetLastStatus() (*model.Port, error) {
 	result := db.Raw("SELECT * FROM port ORDER BY id DESC LIMIT 1").Scan(&port)
 
 	if result.Error != nil {
+		fmt.Println("Error connecting with database", result.Error.Error())
 		return nil, errors.New("could not connect to database")
 	}
 
