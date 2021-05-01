@@ -2,7 +2,7 @@ on:
   push:
     branches:
       - master
-name: releases
+name: Preparing New Release And Docker Image
 jobs:
   build:
     needs: test
