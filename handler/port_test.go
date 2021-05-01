@@ -40,7 +40,7 @@ func TestHandlerGetAll(t *testing.T) {
 		}{
 			port: &model.Port{
 				IsOpen: false,
-				Timestamp: time.Now(),
+				Timestamp: time.Date(12,2,3,4,5,6,7, time.UTC),
 			},
 			err: nil,
 		},
@@ -55,7 +55,7 @@ func TestHandlerGetAll(t *testing.T) {
 		t.Fail()
 	}
 
-	expected := `{"status":false}`
+	expected := `{"isOpen":false,"timestamp":"0012-02-03T04:05:06.000000007Z"}`
 
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
