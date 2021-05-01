@@ -2,9 +2,11 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/yagoazedias/dog-escaper/handler"
+	"github.com/yagoazedias/dog-escaper/mqtt"
 	"github.com/yagoazedias/dog-escaper/respository"
 )
-import "github.com/yagoazedias/dog-escaper/handler"
+
 
 func main() {
 	router := gin.Default()
@@ -13,5 +15,7 @@ func main() {
 	{
 		v1.GET("/port", PortHandler.GetLastStatus)
 	}
+
+	mqtt.ConfigureMQQT()
 	router.Run(":8000")
 }

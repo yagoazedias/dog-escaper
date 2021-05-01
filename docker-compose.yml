@@ -1,0 +1,19 @@
+version: '3'
+services:
+  postgres:
+    container_name: postgres_shorter
+    image: "mdillon/postgis"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: main
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+  eclipse-mosquitto:
+    ports:
+      - '1883:1883'
+      - '9001:9001'
+    volumes:
+      - './mosquitto.conf:/mosquitto/config/mosquitto.conf'
+    image: eclipse-mosquitto
+

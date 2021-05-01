@@ -2,33 +2,30 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/yagoazedias/dog-escaper/model"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 )
-
-type ContextMock struct {
-	JSONCalled bool
-}
-
-func (c *ContextMock) JSON(code int, obj interface{}){
-	c.JSONCalled = true
-}
 
 type PortRepositoryMock struct {
 	GetLastStatusResponse struct{
-		status string
+		port *model.Port
 		err error
 	}
-	UpdateLastStatusResponse error
+	UpdateLastStatusResponse struct{
+		port *model.Port
+		err error
+	}
 }
 
-func (r PortRepositoryMock) GetLastStatus() (string, error) {
-	return r.GetLastStatusResponse.status, r.GetLastStatusResponse.err
+func (r PortRepositoryMock) GetLastStatus() (*model.Port, error) {
+	return r.GetLastStatusResponse.port, r.GetLastStatusResponse.err
 }
 
-func (r PortRepositoryMock) UpdateLastStatus(status string) error {
-	return r.UpdateLastStatusResponse
+func (r PortRepositoryMock) UpdateLastStatus(bool) (*model.Port, error) {
+	return r.UpdateLastStatusResponse.port, r.UpdateLastStatusResponse.err
 }
 
 func TestHandlerGetAll(t *testing.T) {
@@ -38,10 +35,13 @@ func TestHandlerGetAll(t *testing.T) {
 	// Mocking response from handler
 	PortHandler := NewPortHandler(PortRepositoryMock{
 		GetLastStatusResponse: struct {
-			status string
+			port *model.Port
 			err    error
 		}{
-			status: "test",
+			port: &model.Port{
+				IsOpen: false,
+				Timestamp: time.Now(),
+			},
 			err: nil,
 		},
 	})
@@ -55,7 +55,7 @@ func TestHandlerGetAll(t *testing.T) {
 		t.Fail()
 	}
 
-	expected := `{"status":"test"}`
+	expected := `{"status":false}`
 
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
