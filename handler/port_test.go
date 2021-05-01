@@ -6,11 +6,12 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 )
 
 type PortRepositoryMock struct {
 	GetLastStatusResponse struct{
-		status bool
+		port *model.Port
 		err error
 	}
 	UpdateLastStatusResponse struct{
@@ -19,8 +20,8 @@ type PortRepositoryMock struct {
 	}
 }
 
-func (r PortRepositoryMock) GetLastStatus() (bool, error) {
-	return r.GetLastStatusResponse.status, r.GetLastStatusResponse.err
+func (r PortRepositoryMock) GetLastStatus() (*model.Port, error) {
+	return r.GetLastStatusResponse.port, r.GetLastStatusResponse.err
 }
 
 func (r PortRepositoryMock) UpdateLastStatus(bool) (*model.Port, error) {
@@ -34,10 +35,13 @@ func TestHandlerGetAll(t *testing.T) {
 	// Mocking response from handler
 	PortHandler := NewPortHandler(PortRepositoryMock{
 		GetLastStatusResponse: struct {
-			status bool
+			port *model.Port
 			err    error
 		}{
-			status: false,
+			port: &model.Port{
+				IsOpen: false,
+				Timestamp: time.Now(),
+			},
 			err: nil,
 		},
 	})
