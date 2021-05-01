@@ -2,7 +2,7 @@ on:
   pull_request:
     branches:
       - master
-name: Testing new release Candidate
+name: Testing New Release Candidate
 jobs:
   test:
     strategy:
