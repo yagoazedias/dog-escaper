@@ -1,0 +1,39 @@
+version: '3'
+services:
+  dog-escaper:
+    container_name: dog-escaper
+    build: ..
+    ports:
+      - "8000:8000"
+    environment:
+      MQTT_HOST: eclipse-mosquitto
+      MQTT_PORT: 1883
+      MQTT_TOPIC: /v1/port/kitchen/isOpen
+      PG_HOST: postgres
+      PG_DB_NAME: main
+      PG_DB_USERNAME: postgres
+      PG_PASSWORD: postgres
+      PG_PORT: 5432
+    depends_on:
+      - postgres
+      - eclipse-mosquitto
+
+  postgres:
+    container_name: postgres_shorter
+    image: "mdillon/postgis"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: main
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  eclipse-mosquitto:
+    ports:
+      - '1883:1883'
+      - '9001:9001'
+    volumes:
+      - './mosquitto.conf:/mosquitto/config/mosquitto.conf'
+    image: eclipse-mosquitto

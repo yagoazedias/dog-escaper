@@ -14,7 +14,7 @@ func (h *PortHandler) GetLastStatus(c *gin.Context) {
 	port, err := h.r.GetLastStatus()
 
 	if err != nil {
-		fmt.Print("error trying to get door status",err)
+		fmt.Println("error trying to get door status", err)
 		c.JSON(500, gin.H{
 			"message": "internal server error",
 		})

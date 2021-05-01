@@ -3,12 +3,13 @@ package mqtt
 import (
 	"fmt"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+	"github.com/yagoazedias/dog-escaper/infraestruture"
 	"github.com/yagoazedias/dog-escaper/respository"
 	"strconv"
 )
 
 func sub(client mqtt.Client) {
-	topic := "/v1/port/kitchen/isOpen"
+	topic := infraestruture.Config["MQTT_TOPIC"]
 	token := client.Subscribe(topic, 1, nil)
 	token.Wait()
 	fmt.Printf("Subscribed to topic %s\n", topic)
@@ -43,11 +44,11 @@ var connectLostHandler mqtt.ConnectionLostHandler = func(client mqtt.Client, err
 }
 
 func ConfigureMQQT() {
-	var broker = "localhost"
-	var port = 1883
+	var broker = infraestruture.Config["MQTT_HOST"]
+	var port = infraestruture.Config["MQTT_PORT"]
 
 	opts := mqtt.NewClientOptions()
-	opts.AddBroker(fmt.Sprintf("tcp://%s:%d", broker, port))
+	opts.AddBroker(fmt.Sprintf("tcp://%s:%s", broker, port))
 	opts.SetClientID("dog_escaper")
 	opts.SetUsername("dog_escaper")
 	opts.SetPassword("testing")
