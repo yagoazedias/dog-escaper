@@ -7,3 +7,6 @@ run:
 
 build:
 	go build main.go
+
+docker-up:
+	docker-compose -f resources/docker-compose.yml up -d

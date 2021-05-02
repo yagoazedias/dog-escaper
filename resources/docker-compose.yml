@@ -1,7 +1,8 @@
 version: '3'
 services:
   dog-escaper:
-    image: "yagoazedias/dog-escaper"
+    container_name: dog-escaper
+    image: "yagoazedias/dog-escaper:latest"
     ports:
       - "8000:8000"
     environment:
