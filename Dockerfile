@@ -1,4 +1,4 @@
-FROM golang:1.16
+FROM balenalib/raspberry-pi-debian-golang:latest
 
 WORKDIR /go/src/app
 COPY . .
